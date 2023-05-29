@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="spa" >
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="jquery.js"></script>
+</head>
+<body>
+  
+<div class="login-box">
+  <h2>Inicio de Sesión</h2>
+  <form action="login.php" method="POST">
+    <div class="user-box">
+      <input type="text" name="user" required="" id="user">
+      <label>Usuario</label>
+    </div>
+    <div class="user-box">
+      <input type="password" name="password" required="" id="password">
+      <label>Contraseña</label>
+      <span id="seregistra" style="color:yellow;"></span>
+    </div>
+    <a id="loginbtn" href="javascript:;"onclick="registra($('#user').val(), $('#password').val()); return false;">
+      
+      Ingresar
+    </a>
+  </form>
+</div>
+
+<script>
+  function registra(user, password){
+    var datos={
+      "user" : user,
+      "password" : password,
+    };
+    console.log(datos);
+     $.ajax({
+        data: datos, 
+        url: 'login.php',
+        type: 'post',
+        beforeSend: function(){
+            $("#seregistra").html("Procesando...");
+        },
+                success: function (response){
+                     $("#seregistra").html(response);
+                    if(response==1){
+                        $("#seregistra").html("Sin datos");                    
+                    }else if(response==2){
+                        $("#seregistra").html("Datos incorrectos");
+                    }else if(response==3){
+                        $("#seregistra").html("Bienvenido");
+                    }
+                  }
+     })
+  }
+</script>
+
+</body>
+</html>
